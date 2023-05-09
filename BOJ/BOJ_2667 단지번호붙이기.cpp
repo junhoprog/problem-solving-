@@ -1,44 +1,63 @@
 #include<iostream>
+#include<vector>
 using namespace std;
 
-void Search(bool** visited, int** Map,int* C,int x,int y, int N)
+int num_cnt = 0;
+void Search(bool** visited, int** Map, int x, int y, int N, int num_cnt)
 {
-	static int cnt = 0;
-	int num_cnt = 0;
+	static int cnt = 1;
+
 	int dx[4] = { 0,1,0,-1 };
 	int dy[4] = { 1,0,-1,0 };
+
 	int nx, ny;
 
-	for (int i = 0; i < 4; i++)
+	if (Map[x][y] && visited[x][y] == 0)
 	{
-		nx = x + dx[i];
-		ny = y + dy[i];
-		if (visited[nx][ny] == 0 && Map[nx][ny])
+
+		visited[x][y] = 1;
+		num_cnt++;
+		cout << "hello" << " ";
+		for (int i = 0; i < 4; i++)
 		{
+			nx = x + dx[i];
+			ny = y + dy[i];
+			if (visited[nx][ny] == 0 && Map[nx][ny])
+			{
+				Search(visited, Map, nx, ny, N, num_cnt);
+				//ë‚´ ì£¼ë³€ì— 1ì´ ìˆëŠ”ì§€ í™•ì¸í•´
+			}
 
+			else {
+				continue;
+			}
 		}
-
+		cnt++;
 	}
-	//¸ğµç ¸éÀÌ search°¡ ³¡³ª¸é cnt++ÇÏ°í num_cnt¿¡ °ª ÀúÀå
+
+	cout << num_cnt;
+	//ìì‹ ì´ ìˆëŠ” ìë¦¬ê°€ 1ì´ë©´ 
+
 }
 
 int main()
 {
-	int N,count=0;
+	int N, count = 0;
 	cin >> N;
-	bool** visited = new bool*[N];
+	bool** visited = new bool* [N];//ë°©ë¬¸ì—¬ë¶€í™•ì¸
 	for (int i = 0; i < N; i++)
 	{
 		visited[i] = new bool[N];
 	}
 
-	int** Map = new int* [N];
+	int** Map = new int* [N];//ì •Nê°í˜• ì§€ë„
 	for (int i = 0; i < N; i++)
 	{
 		Map[i] = new int[N];
 	}
-	int*C=new int[N];
-
+	
+	vector<int>C((N*N)/2+1);
+	
 	string temp;
 	for (int i = 0; i < N; i++)
 	{
@@ -48,10 +67,32 @@ int main()
 			Map[i][j] = temp[count];
 			count++;
 		}
+		count = 0;
 		temp = "";
 	}
-	visited[0][0] = 1;
-	Search(visited,Map,C,0 ,0,N);
+
+	count = 0;
+	for (int i = 0; i < N; i++)
+	{
+		for (int j = 0; j < N; j++)
+		{
+			Search(visited, Map, i, j, N, 0);
+				if (num_cnt != 0)
+				{
+					C[count] = num_cnt;
+					num_cnt=0;
+					count++;
+					cout << "hello" << endl;
+				}
+		}
+	}
+	
+	cout << count + 1 << endl;
+	for (int i = 0; i < count+1; i++)
+	{
+		cout << C[i] << endl;
+	}
+	
 	for (int i = 0; i < N; i++)
 	{
 		delete[]Map[i];
@@ -64,9 +105,6 @@ int main()
 	}
 	delete[]visited;
 
-	delete[]C;
-
-	//1Àº Áı 0Àº ÁıX
 
 	return 0;
 }
