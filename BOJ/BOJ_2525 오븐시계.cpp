@@ -1,17 +1,37 @@
-#include <iostream>
-
+#include<iostream>
 using namespace std;
 
-int main(int argc, char const* argv[]) {
-	int A, B, C;
-	cin >> A >> B >> C;
+int main()
+{
+	int hour, minute, cook;
 
-	int min = 60 * A + B;   // ½Ã -> ºÐ
-	min += C;
+	cin >> hour >> minute >> cook;
 
-	int hour = (min / 60) % 24;
-	int minute = min % 60;
+	while (cook > 0) {
+		if (cook >= 60)
+		{
+			hour++;
+			cook -= 60;
+			continue;
+		}
+		else {
+			if (minute + cook >= 60)
+			{
+				hour++;
+				minute = cook - (60 - minute);
+				cook = -1;
+			}
+			else {
+				minute = cook + minute;
+				cook = -1;
+			}
+		}
 
+	}
+	if (hour >= 24)
+	{
+		hour = hour - 24;
+	}
 	cout << hour << " " << minute;
 	return 0;
 }
