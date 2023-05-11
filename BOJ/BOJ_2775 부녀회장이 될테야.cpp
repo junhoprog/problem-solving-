@@ -9,10 +9,12 @@ void dp(int** P, int k, int n)
 		dp(P, k - 1, n);//ÇØ´çÃş
 		for (int i = 1; i <= n; i++)
 		{
+			sum = 0;
 			for (int j = 1; j <= i; j++)
 			{
 				sum += P[k - 1][j];
 			}
+			P[k][i] = sum;
 		}
 
 		//kÃşÀÌ 0ÃşÀÏ ¶§±îÁö 0ÃşÀÌ¸é 1~nÃş±îÁö ´õÇØ¼­ °¢°¢ p[k][n]¿¡ ³Ö±â
@@ -35,16 +37,17 @@ int main()
 	int T, k, n, d = 0;
 	cin >> T;
 	int* arr = new int[T];
+	int** P = new int* [15];
+	for (int i = 0; i < 15; i++)
+	{
+		P[i] = new int[15];
+	}
+
+	dp(P, 14, 14);
 
 	while (T > 0) {
 		cin >> k;
 		cin >> n;
-		int** P = new int* [k];
-		for (int i = 0; i < k; i++)
-		{
-			P[i] = new int[n + 1];
-		}
-		dp(P, k, n);
 		arr[d] = P[k][n];
 		d++;
 		T--;
