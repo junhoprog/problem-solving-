@@ -9,66 +9,43 @@ vector<int>v;
 int arr[4] = { 10,20,30,40 };
 void dfs(vector<vector<int>> users, vector<int> emoticons)
 {
-	int temp_emouser = 0;
-	int sum = 0;
-	int* temp_price = new int[users.size()];
-	for (int i = 0; i < users.size(); i++)
+	int emo_tmp = 0;
+	int price_tmp = 0;
+
+	if (v.size() == emoticons.size())
 	{
-		temp_price[i] = 0;
-	}
-	static bool* B = new bool[emoticons.size()];
+		for (int i = 0; i < users.size(); i++) {
+			int sum = 0;
 
-	if (!v.empty())
-	{
-		for (int j = 0; j < users.size(); j++) {
-			if (B[j] == 1)
-			{
-				continue;
-			}
-
-			else {
-				for (int i = 0; i < emoticons.size(); i++)
-				{
-
-					if (users[j][0] <= v[i])
-					{
-						//할인율 만큼 더함.
-						sum = sum + emoticons[i] * (100 - v[i]) / 100;//만약에 10퍼센트 였다면 90이 됨
-
-						if (users[j][1] < sum)
-						{
-							temp_price[j] = 0;
-							temp_emouser++;
-							B[j] = 1;
-						}
-
-						else {
-							temp_price[j] = sum;
-							//더 비싸게 받으려면 할인 율 적을 때 ㅇㅋ 이면 확정
-						}
-
-					}
-
+			for (int j = 0; j < emoticons.size(); j++) {
+				if (users[i][0] <= v[j]) {
+					sum = sum + emoticons[j] * (100 - v[j]) / 100;
 				}
 			}
 
-		}
-		if (temp_emouser == users.size())
-		{
-			//만약에 모든 인원이 다 가입하면
-			emo_user = temp_emouser;
-			for (int i = 0; i < users.size(); i++) {
-					price += temp_price[i];
-				}
+			if (sum >= users[i][1]) { emo_tmp++; }
+			else { price_tmp = price_tmp + sum; }
+			
+
+
+			if (emo_user < emo_tmp) {
+				emo_user = emo_tmp;
+				price = price_tmp;
+			}
+			
+			else if (emo_user == emo_tmp && price < price_tmp) {
+				price = price_tmp;
+			}
+			//계속 최신화
 			return;
-		}
 
+		}
 	}
 
 	//할인율이 더 작은 사람을 찾아서 계산시키기
 	for (int i = 0; i < 4; i++)
 	{
-		v.push_back(arr[i]);
+		v.push_back(arr[i]);//1111-> 2111....이 과정 계속 반복
 		dfs(users, emoticons);
 		v.pop_back();
 	}
