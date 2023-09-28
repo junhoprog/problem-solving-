@@ -10,7 +10,7 @@ void BFS(queue<pair<int, int>>q,int** box, bool** visited,int N,int M,int t)
 {
 	int x = 0,y=0;
 	int tmp = 0;
-	int count=t;
+	int count=t;//2
 	while (!q.empty())
 	{
 		for (int i = 0; i < count; i++) {
