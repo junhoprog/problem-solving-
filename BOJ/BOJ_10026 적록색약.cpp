@@ -7,13 +7,12 @@ int move_y[4] = { 1,0,-1,0 };
 
 int cnt1 = 0;//적록색약x
 int cnt2 = 0;//적록색약
-char criteria;
+char criteria;//기준 색
 void dfs(bool** visited, char** c, int N, int x, int y)
 {
-	//재귀로
 	//처음엔 적록색약 아닌사람 구하기
 	for (int q = 0; q < 4; q++) {
-		if (y + move_y[q] < 0 || y + move_y[q] == N || x + move_x[q] < 0 || x + move_x[q] == N)
+		if (y + move_y[q] < 0 || y + move_y[q] == N || x + move_x[q] < 0 || x + move_x[q] == N)//범위를 넘었을 때
 		{
 			continue;
 		}

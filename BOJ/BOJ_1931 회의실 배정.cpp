@@ -22,7 +22,7 @@ int main()
 
 	for (int i = 1; i < N; i++)
 	{
-		if (end <= v[i].second)//시작시간이 끝나는시간보다 커지게되면 담 회의시작이니까.
+		if (end <= v[i].second) //시작시간이 끝나는시간보다 커지게되면 담 회의시작이니까.
 		{
 			cnt++;
 			end = v[i].first;//마지막시간을 교체.

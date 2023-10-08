@@ -8,11 +8,13 @@ int main()
 	//소문자,숫자,공백,특수문자로 이루어짐
 	//시작과끝 공백x
 	//<,>문자열에있는 경우 번갈아가면서 등장하며 <등장후 >등장 두 문자의 개수는 같다.
+
 	string str;
 	getline(cin, str);
 	bool check = false;
 	bool check2 = false;
 	int index = 0;
+
 	for (int i = 0; i < str.size(); i++)
 	{
 		if (str[i] == '<')
@@ -53,6 +55,7 @@ int main()
 			index = i;
 			check2 = true;
 		}
+
 		else if (check2 == true)
 		{
 			//중간지점들은 그대로가기
