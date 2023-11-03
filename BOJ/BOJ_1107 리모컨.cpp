@@ -37,6 +37,7 @@ int main()
 			min_cnt = min(min_cnt, temp);//원래 최소cnt와 현재값 비교해서 작은 값이 횟수
 		}
 	}
+
 	cout << min_cnt;
 	return 0;
 }
