@@ -1,6 +1,7 @@
 #include <string>
 #include <vector>
 #include<iostream>
+#include<queue>
 using namespace std;
 
 void init_sum(long long int& sum1, long long int& sum2, vector<int>queue1, vector<int> queue2, long long int& max)
@@ -26,6 +27,16 @@ void init_sum(long long int& sum1, long long int& sum2, vector<int>queue1, vecto
 }
 int solve(int& size, int& answer, long long int& sum1, long long int& sum2, vector<int>queue1, vector<int> queue2)
 {
+    queue<int>q1;
+    queue<int>q2;
+    for (int i = 0; i < queue1.size(); i++)
+    {
+        q1.push(queue1[i]);
+    }
+    for (int i = 0; i < queue2.size(); i++)
+    {
+        q2.push(queue2[i]);
+    }
     //적을 때 많을 때 고려
     while (1) {
         if (answer > size * 3)
@@ -34,17 +45,17 @@ int solve(int& size, int& answer, long long int& sum1, long long int& sum2, vect
         }
         if (sum1 < sum2)
         {
-            queue1.push_back(queue2[0]);//3 2 7 2 4
-            sum1 += queue2[0];
-            sum2 -= queue2[0];
-            queue2.erase(queue2.begin());//6 5 1
+            q1.push(q2.front());//3 2 7 2 4
+            sum1 += q2.front();
+            sum2 -= q2.front();
+            q2.pop();//6 5 1
             //cout<<sum1<<" "<<sum2<<" \n";
         }
         else if (sum1 > sum2) {
-            queue2.push_back(queue1[0]);//2 7 2 4
-            sum2 += queue1[0];
-            sum1 -= queue1[0];
-            queue1.erase(queue1.begin());//6 5 1 3
+            q2.push(q1.front());//2 7 2 4
+            sum2 += q1.front();
+            sum1 -= q1.front();
+            q1.pop();//6 5 1 3
             //cout<<sum1<<" "<<sum2<<" \n";
         }
         else {
