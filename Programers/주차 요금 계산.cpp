@@ -1,37 +1,37 @@
-ans#include<iostream>
+#include<iostream>
 #include<vector>
 #include<sstream>
 #include<map>
 #include<algorithm>
 using namespace std;
 
-int devide_time(vector<string>time,int k)
+int devide_time(vector<string>time,int k)//시간을 :기준으로 시분 단위로 나눔
 {
 	string s="";
 	int hour;
 	int minute;
 	int div_time;
-	for (int i = 0; i < time[k].size(); i++)
+	for (int i = 0; i < time[k].size(); i++)//불러온 시간 사이즈만큼 불러옴
 	{
-		if (time[k][i] == ':')
+		if (time[k][i] == ':')//:를 만나면
 		{
 			for (int j = 0; j < i; j++)
 			{
-				s += time[k][j];
+				s += time[k][j];//가 나오기전까지인 i를 기준으로 s에 추가
 			}
-			hour = stoi(s);
+			hour = stoi(s);//string을 int로 변환해서 숫자 넣어줌
 			//cout << hour;
 			s = "";
 			for (int j = i + 1; j < time[k].size(); j++)
 			{
-				s += time[k][j];
+				s += time[k][j];//끝까지 확인해서 : 다음 분을 s에 넣음
 			}
 			minute = stoi(s);
-			break;
+			break;//:이후가 필요없어졌음
 		}
 
 	}
-	div_time = (60 * hour) + minute;
+	div_time = (60 * hour) + minute;//div_time에 총 분을 넣음
 	return div_time;
 }
 
@@ -52,22 +52,22 @@ vector<int> solution(vector<int>fees, vector<string>records)
 	string temp;
 	int cnt = 0;
 	for (int i = 0; i < records.size();i++) {
-		stringstream ss(records[i]);
-		while (ss >> temp)
+		stringstream ss(records[i]);//문자열 자르는 함수로 records[i]에 있는 문자열을 공백기준으로 나눠서 ss에 넣음
+		while (ss >> temp)//ss에서 공백기준으로 나눠진 문자열들을 temp에 넣고 이 temp를 사용
 		{
 			if (cnt == 0)
 			{
-				time.push_back(temp);
+				time.push_back(temp);//시간에 기록
 				cnt++;
 			}
 			else if (cnt == 1)
 			{
-				num.push_back(temp);
+				num.push_back(temp);//번호판 기록
 				cnt++;
 			}
 			else if (cnt == 2)
 			{
-				inout.push_back(temp);
+				inout.push_back(temp);// 입,출 확인
 				cnt = 0;
 			}
 		}
@@ -80,19 +80,19 @@ vector<int> solution(vector<int>fees, vector<string>records)
 	{
 		if (i == 0)
 		{
-			uniq.push_back(num[i]);
+			uniq.push_back(num[i]);//uniq숫자를 찾음
 		}
 		else {
 			for (int j = 0; j < uniq.size(); j++)
 			{
-				if (uniq[j] == num[i])//같은 게 있다면
+				if (uniq[j] == num[i])//uniq숫자와 같은 게 있다면 반복 중지
 				{
 					break;
 				}
 				else{
-					if (j == uniq.size() - 1)
+					if (j == uniq.size() - 1)//끝에 도달했을 때
 					{
-						uniq.push_back(num[i]);
+						uniq.push_back(num[i]);//uniq숫자로 지정
 					}
 				}
 				
@@ -103,7 +103,7 @@ vector<int> solution(vector<int>fees, vector<string>records)
 	
 	for (int i = 0; i < records.size(); i++)
 	{
-		div_time=devide_time(time, i);
+		div_time=devide_time(time, i);//나눠진 시간을 담아서
 		if (inout[i] == "IN")
 		{
 			m[num[i]] = div_time;
@@ -126,13 +126,14 @@ vector<int> solution(vector<int>fees, vector<string>records)
 		}
 	}
 
-	while (!m.empty())
+	while (!m.empty())//비어있을 때까지 반복
 	{
-		for (int j = 0;j<list.size(); j++)
+		for (int j = 0;j<list.size(); j++)//in만있고 out 없을 때
 		{
 			m[list[j]] = 1439 - m[list[j]];
-			sum[list[j]] += m[list[j]];//0000:34누적
+			sum[list[j]] += m[list[j]];
 			m.erase(list[j]);
+
 		}
 	}
 	
@@ -149,12 +150,13 @@ vector<int> solution(vector<int>fees, vector<string>records)
 		else {
 			sum[uniq[j]] -= base_time;
 			result += base_fee;
+
 			if (sum[uniq[j]] % after_time == 0)
 			{
 				result += (sum[uniq[j]] / after_time) * after_fee;
 				//올림할 필요없을 때
 			}
-			else {
+			else {//올림하기위해 
 				result += ((sum[uniq[j]] / after_time) + 1) * after_fee;
 			}
 		}
@@ -162,6 +164,7 @@ vector<int> solution(vector<int>fees, vector<string>records)
 	}
 	answer = v;
 	return answer;
+
 }
 
 int main()

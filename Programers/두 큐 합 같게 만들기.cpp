@@ -29,49 +29,57 @@ int solve(int& size, int& answer, long long int& sum1, long long int& sum2, vect
 {
     queue<int>q1;
     queue<int>q2;
+    //queue로 새로운 변수 q2,q1만듦
+
     for (int i = 0; i < queue1.size(); i++)
     {
         q1.push(queue1[i]);
     }
+
     for (int i = 0; i < queue2.size(); i++)
     {
         q2.push(queue2[i]);
     }
-    //적을 때 많을 때 고려
+    //q1과q2에 변수넣음
+
     while (1) {
-        if (answer > size * 3)
+        //두 q의 합을 같게 만들기 위해 큰것을 작은 것에 넣는 과정필요
+
+        if (answer > size * 3) // 합하고 뺀 횟수가 q1의 3배이상 했다면 종료
         {
             return -1;
         }
+
         if (sum1 < sum2)
         {
-            q1.push(q2.front());//3 2 7 2 4
+            q1.push(q2.front());
             sum1 += q2.front();
             sum2 -= q2.front();
-            q2.pop();//6 5 1
-            //cout<<sum1<<" "<<sum2<<" \n";
+            q2.pop();
         }
         else if (sum1 > sum2) {
-            q2.push(q1.front());//2 7 2 4
+            q2.push(q1.front());
             sum2 += q1.front();
             sum1 -= q1.front();
-            q1.pop();//6 5 1 3
-            //cout<<sum1<<" "<<sum2<<" \n";
+            q1.pop();
         }
+        //두 queue중 합이 더 큰 q를 작은 q에 넣고 합을 더하고 빼는 작업
         else {
-            break;//sum1==sum2
+            break;
+            //같아진다면 종료
         }
-        answer++;
+        answer++;//횟수 저장
     }
     return answer;
 }
 int solution(vector<int> queue1, vector<int> queue2) {
+
     int answer = 0;
     long long int sum1 = 0;
     long long int sum2 = 0;
     long long int total_sum = 0;
     long long int max = 0;
-    init_sum(sum1, sum2, queue1, queue2, max);
+    init_sum(sum1, sum2, queue1, queue2, max);//q1,q2 총합 구하기.
     total_sum = sum1 + sum2;
     int size = queue1.size();
     if (total_sum % 2 == 1)
@@ -84,18 +92,11 @@ int solution(vector<int> queue1, vector<int> queue2) {
     }
     return solve(size, answer, sum1, sum2, queue1, queue2);
 }
+
 int main()
 {
     vector<int>queue1;
     vector<int>queue2;
-    queue1.push_back(3);
-    queue1.push_back(2);
-    queue1.push_back(7);
-    queue1.push_back(2);
-
-    queue2.push_back(4);
-    queue2.push_back(6);
-    queue2.push_back(5);
-    queue2.push_back(1);
-    cout<<solution(queue1, queue2);
+   
+    cout << solution({ 3,2,7,2 }, {4,6,5,1});
 }
