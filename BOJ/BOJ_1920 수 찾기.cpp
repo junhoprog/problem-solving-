@@ -1,69 +1,51 @@
-#include<iostream>
+ï»¿#include<iostream>
 #include<algorithm>
-#include<vector>
 using namespace std;
 
-void Search(bool* B, vector<int>v, long long int* arr2, int i, int s, int q) {
-	int m = (s + q) / 2;
-	if (v[q] < arr2[i])
-	{
-		B[i] = 0;
-		return;
-	}
-	else {
-		if (v[m] < arr2[i])
-		{
-			Search(B, v, arr2, i, m + 1, q);
-		}
-		else if (v[m] > arr2[i])
-		{
-			Search(B, v, arr2, i, s, m);
-		}
-
-		else if (v[m] == arr2[i]) {
-			B[i] = 1;
-		}
-		else {
-			B[i] = 0;
-		}
-	}
-}
-void Find_num(bool* B, vector<int>v, long long int* arr2, int N, int M)
+int N, M;
+int check(int target,int A[])
 {
-	for (int i = 0; i < M; i++)
+	
+	int	start = 0;
+	int end = N-1;
+	while (start<=end)
 	{
-		Search(B, v, arr2, i, 0, M - 1);
+		int mid = (start + end) / 2;
+		if (A[mid] < target)//ë” í¬ë©´
+		{
+			start = mid + 1;
+		}
+		else if (A[mid] == target)//ë°œê²¬!
+		{
+			return 1;
+		}
+		else {//ë” ìž‘ìœ¼ë©´
+			end = mid - 1;
+		}
 	}
+	return 0;
 }
 int main()
 {
-	int N, M;
+	ios_base::sync_with_stdio(0); 
+	cin.tie(0);
+
+	int A[100000];
 	cin >> N;
-	vector<int>v(N);
 	for (int i = 0; i < N; i++)
 	{
-		cin >> v[i];
+		cin >> A[i];
 	}
-
+	
+	sort(A,A+N);
+	
 	cin >> M;
-	long long int* arr2 = new long long int[M];
-	bool* B = new bool[M];
+	int x;
 	for (int i = 0; i < M; i++)
 	{
-		B[i] = 0;
+		cin >> x;
+		cout << check(x,A) << "\n";
 	}
-	for (int j = 0; j < M; j++)
-	{
-		cin >> arr2[j];
-	}
-	sort(v.begin(), v.end());
-	Find_num(B, v, arr2, N, M);
-	for (int i = 0; i < M; i++)
-	{
-		cout << B[i] << "\n";
-	}
-	delete[]B;
-	delete[]arr2;
-	//arr2¿¡ ÀÖ´Â ¼öµéÀÌ arr¿¡ Á¸ÀçÇÏ´ÂÁö ¾Ë¾Æ³»±â-
+	
 	return 0;
 }
