@@ -1,13 +1,13 @@
-#include<iostream>
+ï»¿#include<iostream>
 using namespace std;
 
 int Draw_x[8] = { 0,1,0,-1,-1,1,1,-1 };
-int Draw_y[8] = {1,0,-1,0,-1,1 ,-1,1 };
+int Draw_y[8] = { 1,0,-1,0,-1,1 ,-1,1 };
 int Delete_x[8] = { 0,1,0,-1,-1,1,1,-1 };
 int Delete_y[8] = { 1,0,-1,0,-1,1 ,-1,1 };
 int count = 0;
 
-void Draw(int N, int x, int y, int** visited)//ÄıÀ» ³õÀ» ¼ö ¾ø´Â °÷¿¡ »öÄ¥ÇÏ´Â °úÁ¤
+void Draw(int N, int x, int y, int** visited)//í€¸ì„ ë†“ì„ ìˆ˜ ì—†ëŠ” ê³³ì— ìƒ‰ì¹ í•˜ëŠ” ê³¼ì •
 {
 	int cnt = 1;
 	visited[x][y]++;
@@ -15,10 +15,10 @@ void Draw(int N, int x, int y, int** visited)//ÄıÀ» ³õÀ» ¼ö ¾ø´Â °÷¿¡ »öÄ¥ÇÏ´Â °
 	{
 		cnt = 1;
 		while (1) {
-			
-			if ((x + cnt*Draw_x[i]) < 0 || (y + cnt*Draw_y[i]) < 0 || (x + cnt * Draw_x[i]) == N || (y + cnt * Draw_y[i]) == N)
+
+			if ((x + cnt * Draw_x[i]) < 0 || (y + cnt * Draw_y[i]) < 0 || (x + cnt * Draw_x[i]) == N || (y + cnt * Draw_y[i]) == N)
 			{
-				//¹ş¾î³ª¸é
+				//ë²—ì–´ë‚˜ë©´
 				break;
 			}
 			else {
@@ -28,18 +28,9 @@ void Draw(int N, int x, int y, int** visited)//ÄıÀ» ³õÀ» ¼ö ¾ø´Â °÷¿¡ »öÄ¥ÇÏ´Â °
 		}
 
 	}
-	/*cout << "Draw" << endl;
-	for (int i = 0; i < N; i++)
-	{
-		for (int j = 0; j < N; j++)
-		{
-			cout << visited[i][j] << " ";
-		}
-		cout << endl;
-	}*/
 }
 
-void Delete(int N, int x, int y, int** visited)//popµÇ¾úÀ» ¶§, »öÄ¥ÇÑ °÷µéÀ» ÇÑ°³ ¾¿ Á¦°ÅÇÏ´Â °úÁ¤
+void Delete(int N, int x, int y, int** visited)//popë˜ì—ˆì„ ë•Œ, ìƒ‰ì¹ í•œ ê³³ë“¤ì„ í•œê°œ ì”© ì œê±°í•˜ëŠ” ê³¼ì •
 {
 	int cnt = 1;
 	visited[x][y]--;
@@ -50,7 +41,7 @@ void Delete(int N, int x, int y, int** visited)//popµÇ¾úÀ» ¶§, »öÄ¥ÇÑ °÷µéÀ» ÇÑ°
 
 			if ((x + cnt * Draw_x[i]) < 0 || (y + cnt * Draw_y[i]) < 0 || (x + cnt * Draw_x[i]) == N || (y + cnt * Draw_y[i]) == N)
 			{
-				//¹ş¾î³ª¸é
+				//ë²—ì–´ë‚˜ë©´
 				break;
 			}
 			else {
@@ -74,36 +65,41 @@ void Delete(int N, int x, int y, int** visited)//popµÇ¾úÀ» ¶§, »öÄ¥ÇÑ °÷µéÀ» ÇÑ°
 void Backtracking(int N, int** visited, int x, int y)
 {
 	for (int i = 0; i < N; i++)
-	{  //xÃàÀ» 1¾¿Áõ°¡(ÇÔ¼ö»ç¿ëÇÒ ¶§¸¶´Ù)½ÃÅ°¸ç Àç±ÍÇÔ¼ö 
+	{  //xì¶•ì„ 1ì”©ì¦ê°€(í•¨ìˆ˜ì‚¬ìš©í•  ë•Œë§ˆë‹¤)ì‹œí‚¤ë©° ì¬ê·€í•¨ìˆ˜ 
 
-		if (visited[x][y + i] == 0)
+		if (y + i < N && visited[x][y + i] == 0)
 		{
 			//cout << x << " " << y + i << endl;
 
-			if (x == N - 1)//³¡¿¡ µµÂøÇßÀ» ¶§(ÄıÀ» ³õÀ» ¼ö ÀÖÀ¸¸é¼­.)
+			if (x == N - 1)//ëì— ë„ì°©í–ˆì„ ë•Œ(í€¸ì„ ë†“ì„ ìˆ˜ ìˆìœ¼ë©´ì„œ.)
 			{
 				::count++;
-				
-				//cout <<"count¿¡¿ä"<<" " << ::count << endl;
+
+				//cout <<"countì—ìš”"<<" " << ::count << endl;
 				break;
 			}
-			
-			//count¾ÈµÇ´Â°Å
+
+			//countì•ˆë˜ëŠ”ê±°
 			//
-			
-			Draw(N, x, y + i, visited);//¹æ¹®ÇÑ °÷À¸·ÎºÎÅÍ queen°ú ´ê´Â°÷ ¸ğµÎ ±×¸®°í
-			Backtracking(N, visited, x + 1, y);//x¸¦1¾¿ ´õÇÑ°ªÀ» ´Ù½Ã backÇØÁÜ
-			Delete(N, x, y + i, visited);//°¬´Ù¿ÔÀ¸¸é Áö¿ì±â.
+
+			Draw(N, x, y + i, visited);//ë°©ë¬¸í•œ ê³³ìœ¼ë¡œë¶€í„° queenê³¼ ë‹¿ëŠ”ê³³ ëª¨ë‘ ê·¸ë¦¬ê³ 
+			Backtracking(N, visited, x + 1, y);//xë¥¼1ì”© ë”í•œê°’ì„ ë‹¤ì‹œ backí•´ì¤Œ
+			Delete(N, x, y + i, visited);//ê°”ë‹¤ì™”ìœ¼ë©´ ì§€ìš°ê¸°.
 		}
 	}
 
-	//½ÇÆĞÇßÀ» ¶§ »©¾ßÇÔ
+	//ì‹¤íŒ¨í–ˆì„ ë•Œ ë¹¼ì•¼í•¨
 }
 int main()
 {
 	int N, x = 0, y = 0;
 	cin >> N;
-	int** visited = new int *[N];
+	if (N == 1)
+	{
+		cout << 1;
+		return 0;
+	}
+	int** visited = new int* [N];
 	for (int i = 0; i < N; i++)
 	{
 		visited[i] = new int[N];
@@ -117,15 +113,14 @@ int main()
 		}
 	}
 	for (int i = 0; i < N; i++)
-	{//xÃàÀÌ 0ÀÏ¶§¸¦ ±âÁØÀ¸·Î µ¹¸°´Ù.
+	{//xì¶•ì´ 0ì¼ë•Œë¥¼ ê¸°ì¤€ìœ¼ë¡œ ëŒë¦°ë‹¤.
 		Draw(N, x, i, visited);
-		Backtracking(N, visited, x+1, 0);//xÃà ´ÙÀ½Çà yÃà ¸ğµç ¿­¿¡ queen³Ö¾îº¸±â
+		Backtracking(N, visited, x + 1, 0);//xì¶• ë‹¤ìŒí–‰ yì¶• ëª¨ë“  ì—´ì— queenë„£ì–´ë³´ê¸°
 		Delete(N, x, i, visited);
 	}
 	cout << ::count;
 	for (int i = 0; i < N; i++)
 		delete[] visited[i];
 	delete[] visited;
-	exit(0);
 	return 0;
 }
