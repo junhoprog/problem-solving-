@@ -5,29 +5,32 @@
 using namespace std;
 
 vector<int> solution(vector<int> numbers) {
+
     int n = numbers.size();
+
     vector<int> answer;
     stack<pair<int, int>>s;//numbers안 숫자와, answer의 index로 구성
 
-    
     for (int i = 0; i < numbers.size(); i++)
     {
         answer.push_back(0);
         while (1)
         {
             //top에 있는거랑 numbers랑 비교하는 과정반복
-            if (i == 0)
+            if (i == 0)//처음 숫자는 그냥 넣기 위해 멈춤
             {
                 break;
             }
-            if (s.empty())
+            if (s.empty())//이미 다 뺐으면 멈추고
             {
                 break;
             }
             if (s.top().second < numbers[i])
             {
-                answer[s.top().first] = numbers[i];
+                //first에는인덱스, second엔 숫자가 들어가는데
+                answer[s.top().first] = numbers[i];//맨 위 숫자인덱스 자리에 해당 숫자를 넣어줌
                 s.pop();
+                //(이 과정을 계속 반복해서 더 작아질때까지)
             }
             else
             {

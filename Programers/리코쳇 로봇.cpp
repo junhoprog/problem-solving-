@@ -21,6 +21,7 @@ void search(pair<int, int> goal, pair<int, int> start, vector<vector<char>>graph
 		x = q.front().first.first;
 		y = q.front().first.second;
 		cnt = q.front().second;
+
 		q.pop();
 		//x,y,cnt에 q값 넣고 빼줌
 
