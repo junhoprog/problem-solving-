@@ -27,6 +27,7 @@ int solution(int k, vector<int> tangerine) {
 	for (auto i : s) {//집합 내부 원소를 가져오기 위해 
 		v.push_back({ i,m[i] });
 	}
+
 	sort(v.begin(), v.end(), compare);
 	
 	int cnt = 0;

@@ -29,6 +29,7 @@ int solution(int x, int y, int n) {
 			flag = true;
 			break;
 		}
+
 		else {//발견못하면 현재 숫자에 3가지 조건 모두 확인하면서 q에 넣어줌
 			if (temp-n>0&&DP[temp-n]>DP[temp]+1)
 			{
