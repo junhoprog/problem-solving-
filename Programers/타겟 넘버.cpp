@@ -35,6 +35,7 @@ void bfs(vector<int>numbers, int target, int cur)
         }
     }
 
+    // 1 1
     else {
         for (int i = 0; i < 2; i++)
         {
@@ -45,6 +46,7 @@ void bfs(vector<int>numbers, int target, int cur)
                 sum -= numbers[cur];
                 //+x값을 넣어줌
             }
+
             if (i == 1)
             {
                 sum -= numbers[cur];
@@ -71,8 +73,9 @@ int main()
 }
 /*
 0부터 n-1까지 수행하면서 재귀로 들어감
+1 -1
 1 1 1 1 1
-1 1 1 1 -1
+1 1 1 1 -1 o
 1 1 1 -1 1
 1 1 1 -1 -1 이렇게 하나씩 넣어주면서 진행
 */
